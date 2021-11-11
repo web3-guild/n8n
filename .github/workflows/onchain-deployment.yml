@@ -1,0 +1,47 @@
+name: test onchain deployment.
+
+on:
+  push:
+    branches: [dhruv/workflow-nation] 
+branch: 
+  master
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      nodejs: 
+        node-version: [14.x]
+
+    
+    steps:
+      - 
+        name: Checkout 
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch || 'master' }}
+
+      - 
+      name: setting up   Node.js for the compilation.
+      uses: actions/setup-node@v2
+
+
+    
+      -
+        name: installing deps
+        run: yarn 
+
+      - name: deployment workflow tests
+          paths:
+            - 'packages/web3/**'
+          run: yarn test 
+
+## todo : writing the testing script for deploying the workflow .
+
+
+
+
+
